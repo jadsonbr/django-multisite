@@ -57,6 +57,14 @@ class SiteID(local):
         self.default = default
         self.reset()
 
+    @property
+    def __class__(self):
+        return int
+
+    @property
+    def is_site_id(self):
+        return True
+
     def __repr__(self):
         return repr(self.__int__())
 
@@ -71,21 +79,21 @@ class SiteID(local):
     def __lt__(self, other):
         if isinstance(other, six.integer_types):
             return self.__int__() < other
-        elif isinstance(other, SiteID):
+        elif hasattr(other, 'is_site_id'):
             return self.__int__() < other.__int__()
         return True
 
     def __le__(self, other):
         if isinstance(other, six.integer_types):
             return self.__int__() <= other
-        elif isinstance(other, SiteID):
+        elif hasattr(other, 'is_site_id'):
             return self.__int__() <= other.__int__()
         return True
 
     def __eq__(self, other):
         if isinstance(other, six.integer_types):
             return self.__int__() == other
-        elif isinstance(other, SiteID):
+        elif hasattr(other, 'is_site_id'):
             return self.__int__() == other.__int__()
         return False
 
